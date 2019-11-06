@@ -35,4 +35,14 @@ public class Project implements Serializable {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+        //кавычки
+    }
 }

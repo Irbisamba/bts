@@ -1,6 +1,9 @@
 package bts.utils;
 
+import bts.models.IssuePriority;
+
 public class ConsoleHelper {
+
     public static void showMenu(){
         System.out.println("Menu:");
         System.out.println("--------------");
@@ -15,4 +18,11 @@ public class ConsoleHelper {
         System.out.println("--------------");
         System.out.println("Enter your choice:");
     }
+
+    public static void showPriorities(){
+        for(IssuePriority p: IssuePriority.values()){
+        System.out.println(p);
+        }
+    }
+
 }

@@ -65,4 +65,17 @@ public class Issue implements Serializable {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", priority=" + priority +
+                ", authorName='" + authorName + '\'' +
+                ", projectName='" + projectName + '\'' +
+                '}';
+        //что за кавычки
+    }
 }
