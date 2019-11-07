@@ -63,8 +63,8 @@ public class BTSServiceImpl implements BTSService {
     public List<Issue> findIssuesByProjectAndUser(String projectName, String userName) {
         List<Issue> result = new ArrayList<>();
         for(int i = 0; i<issues.size(); i++){
-            if(projectName.equals(issues.get(i).getProjectName())){
-                if(userName.equals(issues.get(i).getAuthorName())){
+            if(projectName.equalsIgnoreCase(issues.get(i).getProjectName())){
+                if(userName.equalsIgnoreCase(issues.get(i).getAuthorName())){
                     result.add(issues.get(i));
                 }
             }
