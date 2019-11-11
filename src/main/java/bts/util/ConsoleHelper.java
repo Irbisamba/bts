@@ -1,6 +1,6 @@
-package bts.utils;
+package bts.util;
 
-import bts.models.IssuePriority;
+import bts.model.IssuePriority;
 
 public class ConsoleHelper {
 
@@ -24,5 +24,4 @@ public class ConsoleHelper {
         System.out.println(p);
         }
     }
-
 }

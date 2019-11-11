@@ -1,41 +1,41 @@
-package bts.models;
+package bts.model;
 
 import java.io.Serializable;
 
 public class Issue implements Serializable {
 
-    private static int counter = 1;
+    //private static int counter = 1;
 
-    private int id;
+    private long id;
     private String title;
     private String description;
     private IssuePriority priority;
-    private String projectName;
-    private String authorName;
+    private Project project;
+    private User author;
 
-    public Issue(String title, String description, IssuePriority priority, String projectName, String authorName) {
-        id = counter++;
+    public Issue(String title, String description, IssuePriority priority, Project project, User author) {
+        id = System.currentTimeMillis();
         this.title = title;
         this.description = description;
         this.priority = priority;
-        this.projectName = projectName;
-        this.authorName = authorName;
+        this.project = project;
+        this.author = author;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getTitle() {
@@ -62,7 +62,7 @@ public class Issue implements Serializable {
         this.priority = priority;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -73,9 +73,8 @@ public class Issue implements Serializable {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", priority=" + priority +
-                ", authorName='" + authorName + '\'' +
-                ", projectName='" + projectName + '\'' +
+                ", authorName='" + author.getName() + '\'' +
+                ", projectName='" + project.getName() + '\'' +
                 '}';
-        //что за кавычки
     }
 }

@@ -1,17 +1,17 @@
-package bts.models;
+package bts.model;
 
 import java.io.Serializable;
 
 public class Project implements Serializable {
 
-    private static int counter = 1;
+    //private static int counter = 1;
 
-    private int id;
+    private long id;
     private String name;
     private String description;
 
     public Project(String name, String description) {
-        id = counter++;
+        id = System.currentTimeMillis();
         this.name = name;
         this.description = description;
     }
@@ -32,7 +32,7 @@ public class Project implements Serializable {
         this.description = description;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

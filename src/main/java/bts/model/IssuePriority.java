@@ -1,4 +1,4 @@
-package bts.models;
+package bts.model;
 
 public enum IssuePriority {
     MINOR,

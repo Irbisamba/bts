@@ -1,18 +1,17 @@
 package bts;
 
-import bts.models.Issue;
-import bts.models.IssuePriority;
-import bts.models.Project;
-import bts.models.User;
+import bts.model.Issue;
+import bts.model.IssuePriority;
+import bts.model.Project;
+import bts.model.User;
 import bts.service.BTSService;
 import bts.service.BTSServiceImpl;
-import bts.utils.ConsoleHelper;
+import bts.util.ConsoleHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Scanner;
 
 public class Application {
 
@@ -21,7 +20,7 @@ public class Application {
     private static final BTSService btsService = new BTSServiceImpl();
 
     public static void main(String[] args) throws Exception{
-        Application.application();
+        application();
 
     }
 
@@ -33,57 +32,56 @@ public class Application {
             try {
                 command = Integer.parseInt(READER.readLine());
             }catch(IOException|NumberFormatException e){
-                System.out.println("Exception");
+                System.out.println("Something wrong");
             }
 
             switch (command){
                 case 1:
                     addProject();
+                    goOn();
                     break;
                 case 2:
                     addUser();
+                    goOn();
                     break;
                 case 3:
                     addIssue();
+                    goOn();
                     break;
                 case 4:
                     System.out.println("Loading all Projects");
                     for(Project p : btsService.getAllProjects())
                         System.out.println(p);
 
-                    System.out.println("Press Enter to proceed");
-                    READER.readLine();
+                    goOn();
                     break;
                 case 5:
                     System.out.println("Loading all Users");
                     for(User u : btsService.getAllUsers())
                         System.out.println(u);
 
-                    System.out.println("Press Enter to proceed");
-                    READER.readLine();
+                    goOn();
                     break;
                 case 6:
                     System.out.println("Loading all Issues");
                     for(Issue i : btsService.getAllIssues())
                         System.out.println(i);
 
-                    System.out.println("Press Enter to proceed");
-                    READER.readLine();
+                    goOn();
                     break;
                 case 7:
                     for(Issue i : findIssues())
                         System.out.println(i);
 
-                    System.out.println("Press Enter to proceed");
-                    READER.readLine();
+                    goOn();
                     break;
                 case 8:
                     System.out.println("Buy!");
+                    READER.close();
                     break;
                 default:
-                    System.out.println("Sorry, please enter valid command");
-                    System.out.println("Press Enter to proceed");
-                    READER.readLine();
+                    System.out.println("Sorry, enter valid command");
+                    goOn();
 
             }
         }
@@ -96,11 +94,18 @@ public class Application {
         System.out.println("Please, enter description:");
         String description = READER.readLine();
 
-
+        if(name.isEmpty()||description.isEmpty()){
+            System.out.println("Failed");
+            System.out.println("Name and description can not be empty");
+        } else{
+            for(Project project : btsService.getAllProjects()){
+                if(project.getName().equals(name)){
+                    System.out.println("Project already exists");
+                    return;
+                }
+            }
         btsService.addProject(new Project(name, description));
-        System.out.println("Project added.");
-        System.out.println("Press Enter to proceed");
-        String s = READER.readLine();
+        System.out.println("Project added."); }
 
 
     }
@@ -110,11 +115,19 @@ public class Application {
 
         String name = READER.readLine();
 
+        if(name.isEmpty()){
+            System.out.println("Failed");
+            System.out.println("Name can not be empty");
+        } else{
+            for(User user : btsService.getAllUsers()){
+                if(user.getName().equals(name)){
+                    System.out.println("User already exists");
+                    return;
+                }
+            }
         btsService.addUser(new User(name));
-
         System.out.println("User added");
-        System.out.println("Press Enter to proceed");
-        String s = READER.readLine();
+        }
     }
     private static void addIssue() throws IOException{
         System.out.println("Adding new Issue");
@@ -125,22 +138,44 @@ public class Application {
         System.out.println("Please, enter Issue description:");
 
         String descr = READER.readLine();
+        if(title.isEmpty()||descr.isEmpty()){
+            System.out.println("Failed");
+            System.out.println("Title and description can not be empty");
+        } else{
 
         IssuePriority prio = readPriority();
 
         System.out.println("Please, enter Project name:");
 
         String projectName = READER.readLine();
+        Project issueProject = null;
+        for(Project project : btsService.getAllProjects()){
+            if(projectName.equals(project.getName()))
+                 issueProject = project;
+            continue;
+        } if(issueProject==null){
+                System.out.println("Creating new project");
+                System.out.println("Enter project description");
+                issueProject = new Project(projectName, READER.readLine());
+                btsService.addProject(issueProject);
+        }
 
         System.out.println("Please, enter Author name");
 
         String authorName = READER.readLine();
+        User author = null;
+        for(User user : btsService.getAllUsers()){
+            if(authorName.equals(user.getName()))
+                author = user;
+            continue;
+        } if(author==null){
+            author = new User(authorName);
+            btsService.addUser(author);
+            }
 
-        btsService.addIssue(new Issue(title, descr, prio, projectName, authorName));
+        btsService.addIssue(new Issue(title, descr, prio, issueProject, author));
 
-        System.out.println("Issue added.");
-        System.out.println("Press Enter to proceed");
-        String s = READER.readLine();
+        System.out.println("Issue added."); }
     }
     private static List<Issue> findIssues() throws IOException{
         System.out.println("Finding Issues");
@@ -167,6 +202,10 @@ public class Application {
         return prio;
     }
 
+    public static void goOn() throws IOException{
+        System.out.println("Press Enter to proceed");
+        String s = READER.readLine();
+    }
 
 
 }

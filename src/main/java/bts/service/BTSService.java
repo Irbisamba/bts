@@ -1,8 +1,8 @@
 package bts.service;
 
-import bts.models.Issue;
-import bts.models.Project;
-import bts.models.User;
+import bts.model.Issue;
+import bts.model.Project;
+import bts.model.User;
 
 import java.util.List;
 

@@ -1,16 +1,16 @@
-package bts.models;
+package bts.model;
 
 import java.io.Serializable;
 
 public class User implements Serializable {
 
-    private static int counter = 1;
+    //private static int counter = 1;
 
-    private int id;
+    private long id;
     private String name;
 
     public User(String name) {
-        id = counter++;
+        id = System.currentTimeMillis();
         this.name = name;
     }
 
@@ -22,7 +22,7 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

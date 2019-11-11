@@ -1,8 +1,8 @@
 package bts.service;
 
-import bts.models.Issue;
-import bts.models.Project;
-import bts.models.User;
+import bts.model.Issue;
+import bts.model.Project;
+import bts.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,8 +63,8 @@ public class BTSServiceImpl implements BTSService {
     public List<Issue> findIssuesByProjectAndUser(String projectName, String userName) {
         List<Issue> result = new ArrayList<>();
         for(int i = 0; i<issues.size(); i++){
-            if(projectName.equalsIgnoreCase(issues.get(i).getProjectName())){
-                if(userName.equalsIgnoreCase(issues.get(i).getAuthorName())){
+            if(projectName.equalsIgnoreCase(issues.get(i).getProject().getName())){
+                if(userName.equalsIgnoreCase(issues.get(i).getAuthor().getName())){
                     result.add(issues.get(i));
                 }
             }
