@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class Project implements Serializable {
 
-    //private static int counter = 1;
-
     private int id;
     private String name;
     private String description;

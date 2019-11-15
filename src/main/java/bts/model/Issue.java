@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class Issue implements Serializable {
 
-    //private static int counter = 1;
-
     private int id;
     private String title;
     private String description;

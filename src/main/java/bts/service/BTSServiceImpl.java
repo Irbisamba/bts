@@ -27,6 +27,7 @@ public class BTSServiceImpl implements BTSService {
     private static final String SELECT_ISSUES_QUERY = "SELECT * FROM issues";
     private static final String SELECT_FILTER_ISSUES_QUERY = "SELECT * FROM issues WHERE project = '%s' AND author = '%s'";
 
+    private static final String URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
 
     private static final Loader loader = new LoaderImpl();
     private static final Writer writer = new WriterImpl();
@@ -36,7 +37,7 @@ public class BTSServiceImpl implements BTSService {
         List<User> users = loader.load(USERS_FILE_NAME);
         List<Issue> issues = loader.load(ISSUES_FILE_NAME);
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(CREATE_PROJECTS_QUERY);
                 statement.execute(CREATE_USERS_QUERY);
@@ -67,7 +68,7 @@ public class BTSServiceImpl implements BTSService {
 
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (PreparedStatement query = connection.prepareStatement(SELECT_USERS_QUERY)) {
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
@@ -88,7 +89,7 @@ public class BTSServiceImpl implements BTSService {
 
         List<Project> projects = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (PreparedStatement query = connection.prepareStatement(SELECT_PROJECTS_QUERY)) {
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
@@ -108,7 +109,7 @@ public class BTSServiceImpl implements BTSService {
     public List<Issue> getAllIssues() {
         List<Issue> issues = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (PreparedStatement query = connection.prepareStatement(SELECT_ISSUES_QUERY)) {
                 ResultSet rs = query.executeQuery();
                 while (rs.next()) {
@@ -132,7 +133,7 @@ public class BTSServiceImpl implements BTSService {
         users.add(user);
         writer.write(users, USERS_FILE_NAME);
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(String.format(
                         INSERT_USERS_QUERY, user.getName()));
@@ -149,7 +150,7 @@ public class BTSServiceImpl implements BTSService {
         projects.add(project);
         writer.write(projects, PROJECTS_FILE_NAME);
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(String.format(
                         INSERT_PROJECTS_QUERY, project.getName(), project.getDescription()));
@@ -166,7 +167,7 @@ public class BTSServiceImpl implements BTSService {
         issues.add(issue);
         writer.write(issues, ISSUES_FILE_NAME);
 
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(String.format(
                         INSERT_ISSUES_QUERY, issue.getTitle(), issue.getDescription(), issue.getPriority().name(),
@@ -181,7 +182,7 @@ public class BTSServiceImpl implements BTSService {
     @Override
     public List<Issue> findIssuesByProjectAndUser(String projectName, String userName) {
         List<Issue> result = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1")) {
+        try (Connection connection = DriverManager.getConnection(URL)) {
             try (PreparedStatement query = connection.prepareStatement(
                     String.format(SELECT_FILTER_ISSUES_QUERY, projectName, userName))) {
                 ResultSet rs = query.executeQuery();
