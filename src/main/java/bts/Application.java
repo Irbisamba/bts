@@ -1,4 +1,5 @@
 package bts;
+//author - Olga Iastrebova
 
 import bts.model.Issue;
 import bts.model.IssuePriority;
