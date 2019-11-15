@@ -6,7 +6,7 @@ public class Issue implements Serializable {
 
     //private static int counter = 1;
 
-    private long id;
+    private int id;
     private String title;
     private String description;
     private IssuePriority priority;
@@ -14,7 +14,15 @@ public class Issue implements Serializable {
     private User author;
 
     public Issue(String title, String description, IssuePriority priority, Project project, User author) {
-        id = System.currentTimeMillis();
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.project = project;
+        this.author = author;
+    }
+
+    public Issue(int id, String title, String description, IssuePriority priority, Project project, User author) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.priority = priority;

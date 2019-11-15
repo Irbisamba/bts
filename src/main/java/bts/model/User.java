@@ -6,11 +6,15 @@ public class User implements Serializable {
 
     //private static int counter = 1;
 
-    private long id;
+    private int id;
     private String name;
 
     public User(String name) {
-        id = System.currentTimeMillis();
+        this.name = name;
+    }
+
+    public User(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 

@@ -6,12 +6,17 @@ public class Project implements Serializable {
 
     //private static int counter = 1;
 
-    private long id;
+    private int id;
     private String name;
     private String description;
 
+    public Project(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
     public Project(String name, String description) {
-        id = System.currentTimeMillis();
         this.name = name;
         this.description = description;
     }
