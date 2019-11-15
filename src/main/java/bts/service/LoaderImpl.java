@@ -14,7 +14,6 @@ public class LoaderImpl implements Loader{
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)){
             list = (List<T>)objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            //todo
         }
         return list==null ? new ArrayList<>() : list;
     }
